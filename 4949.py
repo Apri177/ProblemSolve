@@ -1,12 +1,7 @@
-import sys
-input = sys.stdin.readline
-
 while(1):
     small = 0
     big = 0
     world = input()
-
-    print(world == '.')
 
     if world == '.':
         break
