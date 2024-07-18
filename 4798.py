@@ -29,8 +29,6 @@ def is_prime(n, prime_list):
 
 test_case_num = 0
 # input = sys.stdin.readlines().strip().split('\n')
-input = sys.stdin.readline()
-
 
 max_possible_value = 10**6
 prime_numbers, is_prime_list = sieve_of_eratosthenes(max_possible_value)
@@ -38,7 +36,7 @@ prime_numbers, is_prime_list = sieve_of_eratosthenes(max_possible_value)
 
 while True:
     try: 
-        line = input
+        line = input()
         
         if line == "0":
             break
