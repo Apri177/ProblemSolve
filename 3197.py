@@ -9,6 +9,8 @@ visited = [[False] * c for _ in range(r)]
 dx = [0, 0, 1, -1]
 dy = [1, -1, 0, 0]
 
+cnt = 0
+
 def bfs(x, y):
     q = deque()
     q.append((x, y))
@@ -22,11 +24,9 @@ def bfs(x, y):
                 visited[nx][ny] = True
                 q.append((nx, ny))
 
-cnt = 0
 for i in range(r):
     for j in range(c):
         if arr[i][j] == 'X':
             bfs(i, j)
-            cnt += 1
 
 print(cnt)
