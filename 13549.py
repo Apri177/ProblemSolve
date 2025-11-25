@@ -17,10 +17,10 @@ while d:
     if vertex == K:
         break
     
-    if vertex * 2 <= 100001 and dist[vertex * 2] > dist[vertex]:
+    if vertex * 2 <= 100000 and dist[vertex * 2] > dist[vertex]:
         dist[vertex * 2] = dist[vertex]
         d.appendleft(vertex * 2)
-    if vertex + 1 <= 100001 and dist[vertex + 1] > dist[vertex] + 1:
+    if vertex + 1 <= 100000 and dist[vertex + 1] > dist[vertex] + 1:
         dist[vertex + 1] = dist[vertex] + 1
         d.append(vertex + 1)
     if vertex - 1 >= 0 and dist[vertex - 1] > dist[vertex] + 1:

@@ -36,7 +36,6 @@ while d:
             print()
         # print(dist[x][y])
         break
-        print()
     
     for i in range(4):
         nx, ny = x + dx[i], y + dy[i]
