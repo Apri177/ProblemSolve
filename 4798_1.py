@@ -29,69 +29,63 @@ def EEA(a, p, b):
     
     return n_mod
 
-BASES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
+MAX_SIEVE = 10**6 + 1
+is_sieved_small = [False] * MAX_SIEVE
+primes = []
 
-def is_prime(n):
-    if n < 2: return False
-    for p in BASES:
-        if n == p: return True
-        if n % p == 0: return False
+def generate_primes():
+    global primes
+    if primes: 
+        return
     
-    d, s = n - 1, 0
-    while d % 2 == 0:
-        d //= 2
-        s += 1
-        
-    for a in BASES:
-        if a >= n: break
-        x = pow(a, d, n)
-        
-        if x == 1 or x == n - 1:
-            continue
-        
-        for _ in range(s - 1):
-            x = pow(x, 2, n)
-            if x == n - 1:
-                break
-        else:
-            return False
-    return True
+    for i in range(2, MAX_SIEVE):
+        if not is_sieved_small[i]:
+            primes.append(i)
+            for j in range(i * i, MAX_SIEVE, i):
+                is_sieved_small[j] = True
 
 def sieve(a: int, b: int, L: int, U: int) -> int:
     if L > U: return 0
     max_value = U * a + b
-    q = math.isqrt(max_value) + 1
     range_len = U - L + 1
     
     if math.gcd(a, b) > 1:
-        if L * a + b == math.gcd(a, b) and is_prime(L * a + b):
-            return 1
+        g = math.gcd(a, b)
+        if g >= MAX_SIEVE or is_sieved_small[g]:
+            return 0
+    
+        if (g - b) % a == 0:
+            n = (g - b) // a
+            if L <= n <= U:
+                return 1
         return 0
     
-    is_sieved_small = [False] * q
-    primes = []
-    for i in range(2, q):
-        if not is_sieved_small[i]:
-            primes.append(i)
-            for j in range(i * i, q, i):
-                is_sieved_small[j] = True
+    sqrt_max = math.isqrt(max_value) + 1
     
     rs = [False] * range_len
     
-    for i in primes:
-        if a % i == 0:
+    for p in primes:
+        if p > sqrt_max:
+            break
+        if a % p == 0:
             continue
         
-        n_mod = EEA(a, i, b)
-        st = (L // i) * i + n_mod
-        if st < L:
-            st += i
+        n_mod = EEA(a, p, b)
+        if n_mod == -1:
+            continue
         
-        for n in range(st, U + 1, i):
-            value = n * a + b
-            
-            if value != i:
-                rs[n - L] = True
+        L_mod = L % p
+        if n_mod >= L_mod:
+            st = L + (n_mod - L_mod)
+        else:
+            st = L + (n_mod - L_mod + p)
+        
+        idx = st - L
+        while idx < range_len:
+            val = (L + idx) * a + b
+            if val != p:
+                rs[idx] = True
+            idx += p
     count = 0
     for i in range(range_len):
         n = L + i
@@ -100,12 +94,13 @@ def sieve(a: int, b: int, L: int, U: int) -> int:
         if value <= 1:
             continue
         if not rs[i]:
-            if is_prime(value):
-                count += 1
+            count += 1
     
     return count
 
 if __name__ == "__main__":
+    generate_primes()
+    
     test_case_num = 0
     
     while True:
