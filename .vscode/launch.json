@@ -32,8 +32,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "e:/PDMTech/Github/ProblemSolve",
-      "program": "e:/PDMTech/Github/ProblemSolve/build/Debug/outDebug",
+      "cwd": "e:/PDMTech/Github/ProblemSolve/second",
+      "program": "e:/PDMTech/Github/ProblemSolve/second/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
